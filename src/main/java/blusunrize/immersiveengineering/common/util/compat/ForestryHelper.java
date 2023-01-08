@@ -1,9 +1,5 @@
 package blusunrize.immersiveengineering.common.util.compat;
 
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import blusunrize.immersiveengineering.api.energy.DieselHandler;
 import blusunrize.immersiveengineering.api.tool.ChemthrowerHandler;
 import blusunrize.immersiveengineering.api.tool.ChemthrowerHandler.ChemthrowerEffect_Potion;
@@ -13,35 +9,32 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import forestry.api.core.ForestryAPI;
 import forestry.api.fuels.EngineBronzeFuel;
 import forestry.api.fuels.FuelManager;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
-public class ForestryHelper extends IECompatModule
-{
-	@Override
-	public void preInit()
-	{
-	}
+public class ForestryHelper extends IECompatModule {
+    @Override
+    public void preInit() {}
 
-	@Override
-	public void init()
-	{
-	}
+    @Override
+    public void init() {}
 
-	@Override
-	public void postInit()
-	{
-		ItemStack propolis = GameRegistry.findItemStack("Forestry", "propolis", 1);
-		Fluid fluidHoney = FluidRegistry.getFluid("for.honey");
-		if(fluidHoney!=null)
-		{
-			DieselHandler.addSqueezerRecipe("dropHoney", 80, new FluidStack(fluidHoney,100), propolis);
-			DieselHandler.addSqueezerRecipe("dropHoneydew", 80, new FluidStack(fluidHoney,100), null);
-		}
+    @Override
+    public void postInit() {
+        ItemStack propolis = GameRegistry.findItemStack("Forestry", "propolis", 1);
+        Fluid fluidHoney = FluidRegistry.getFluid("for.honey");
+        if (fluidHoney != null) {
+            DieselHandler.addSqueezerRecipe("dropHoney", 80, new FluidStack(fluidHoney, 100), propolis);
+            DieselHandler.addSqueezerRecipe("dropHoneydew", 80, new FluidStack(fluidHoney, 100), null);
+        }
 
-		int burnDuration = (int) (2500 * ForestryAPI.activeMode.getFloatSetting("fuel.biomass.biogas"));
-		EngineBronzeFuel engineBronzeFuel = new EngineBronzeFuel(IEContent.fluidBiodiesel, 50, burnDuration, 1);
-		FuelManager.bronzeEngineFuel.put(IEContent.fluidBiodiesel, engineBronzeFuel);
-	
-		ChemthrowerHandler.registerFlammable("bioEthanol");
-		ChemthrowerHandler.registerEffect("for.honey", new ChemthrowerEffect_Potion(null,0, IEPotions.sticky,60,0));
-	}
+        int burnDuration = (int) (2500 * ForestryAPI.activeMode.getFloatSetting("fuel.biomass.biogas"));
+        EngineBronzeFuel engineBronzeFuel = new EngineBronzeFuel(IEContent.fluidBiodiesel, 50, burnDuration, 1);
+        FuelManager.bronzeEngineFuel.put(IEContent.fluidBiodiesel, engineBronzeFuel);
+
+        ChemthrowerHandler.registerFlammable("bioEthanol");
+        ChemthrowerHandler.registerEffect("for.honey", new ChemthrowerEffect_Potion(null, 0, IEPotions.sticky, 60, 0));
+    }
 }

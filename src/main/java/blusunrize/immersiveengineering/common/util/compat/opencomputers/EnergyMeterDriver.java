@@ -10,57 +10,46 @@ import li.cil.oc.api.prefab.DriverTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class EnergyMeterDriver extends DriverTileEntity
-{
+public class EnergyMeterDriver extends DriverTileEntity {
 
-	@Override
-	public ManagedEnvironment createEnvironment(World w, int x, int y, int z)
-	{
-		TileEntity te = w.getTileEntity(x, y, z);
-		if (te instanceof TileEntityEnergyMeter&&((TileEntityEnergyMeter)te).dummy)
-		{
-			return new EnergyMeterEnvironment(w, te.xCoord, te.yCoord+1, te.zCoord);
-		}
-		return null;
-	}
+    @Override
+    public ManagedEnvironment createEnvironment(World w, int x, int y, int z) {
+        TileEntity te = w.getTileEntity(x, y, z);
+        if (te instanceof TileEntityEnergyMeter && ((TileEntityEnergyMeter) te).dummy) {
+            return new EnergyMeterEnvironment(w, te.xCoord, te.yCoord + 1, te.zCoord);
+        }
+        return null;
+    }
 
-	@Override
-	public Class<?> getTileEntityClass()
-	{
-		return TileEntityEnergyMeter.class;
-	}
+    @Override
+    public Class<?> getTileEntityClass() {
+        return TileEntityEnergyMeter.class;
+    }
 
+    public class EnergyMeterEnvironment extends ManagedEnvironmentIE<TileEntityEnergyMeter> {
+        public EnergyMeterEnvironment(World w, int x, int y, int z) {
+            super(w, x, y, z, TileEntityEnergyMeter.class);
+        }
 
-	public class EnergyMeterEnvironment extends ManagedEnvironmentIE<TileEntityEnergyMeter>
-	{
-		public EnergyMeterEnvironment(World w, int x, int y, int z)
-		{
-			super(w, x, y, z, TileEntityEnergyMeter.class);
-		}
+        @Override
+        public String preferredName() {
+            return "ie_current_transformer";
+        }
 
+        @Override
+        public int priority() {
+            return 1000;
+        }
 
-		@Override
-		public String preferredName() {
-			return "ie_current_transformer";
-		}
+        @Override
+        public void onConnect(Node node) {}
 
-		@Override
-		public int priority() {
-			return 1000;
-		}
+        @Override
+        public void onDisconnect(Node node) {}
 
-		@Override
-		public void onConnect(Node node)
-		{}
-
-		@Override
-		public void onDisconnect(Node node)
-		{}
-
-		@Callback(doc = "function():int -- returns the average amount of energy transferred during the last 20 ticks")
-		public Object[] getAvgEnergy(Context context, Arguments args)
-		{
-			return new Object[]{getTileEntity().getAveragePower()};
-		}
-	}
+        @Callback(doc = "function():int -- returns the average amount of energy transferred during the last 20 ticks")
+        public Object[] getAvgEnergy(Context context, Arguments args) {
+            return new Object[] {getTileEntity().getAveragePower()};
+        }
+    }
 }

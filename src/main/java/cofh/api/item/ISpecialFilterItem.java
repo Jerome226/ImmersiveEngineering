@@ -9,15 +9,14 @@ import net.minecraft.item.ItemStack;
  */
 public interface ISpecialFilterItem {
 
-	/**
-	 * This method is called to find out if the given ItemStack should be matched by the given Filter ItemStack.
-	 *
-	 * @param filter
-	 *            ItemStack representing the filter.
-	 * @param item
-	 *            ItemStack representing the queried item.
-	 * @return True if the filter should match. False if the default matching should be used.
-	 */
-	public boolean matchesItem(ItemStack filter, ItemStack item);
-
+    /**
+     * This method is called to find out if the given ItemStack should be matched by the given Filter ItemStack.
+     *
+     * @param filter
+     *            ItemStack representing the filter.
+     * @param item
+     *            ItemStack representing the queried item.
+     * @return True if the filter should match. False if the default matching should be used.
+     */
+    public boolean matchesItem(ItemStack filter, ItemStack item);
 }
